@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1b2a26 0%, #743db6 55%, #4dd4bf 120%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -68,7 +68,8 @@
 
         input[type="number"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #743db6;
+            box-shadow: 0 0 0 3px rgba(116,61,182,0.25);
         }
 
         .input-suffix {
@@ -92,7 +93,7 @@
         button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #743db6 0%, #4dd4bf 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -104,7 +105,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 20px rgba(77, 212, 191, 0.35);
         }
 
         button:active {
@@ -121,7 +122,7 @@
         }
 
         .result-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #743db6 0%, #4dd4bf 100%);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -165,7 +166,7 @@
 
         .detail-value {
             font-weight: 700;
-            color: #667eea;
+            color: #743db6;
         }
 
         .chart-container {
@@ -189,7 +190,7 @@
 
         th {
             background: #f8f9fa;
-            color: #667eea;
+            color: #743db6;
             font-weight: 600;
         }
 
@@ -220,7 +221,7 @@
         }
 
         .scenario-card h3 {
-            color: #667eea;
+            color: #743db6;
             margin-bottom: 15px;
             font-size: 1.1em;
         }
@@ -248,7 +249,7 @@
         }
 
         .comparison-chart h3 {
-            color: #667eea;
+            color: #743db6;
             margin-bottom: 20px;
             text-align: center;
             font-size: 1.3em;
@@ -441,7 +442,7 @@
                     <td style="text-align: left; font-weight: 600;">${annee}</td>
                     <td class="currency">${formatEuro(totalVersements)}</td>
                     <td class="currency">${formatEuro(capital - totalVersements)}</td>
-                    <td class="currency" style="color: #667eea;">${formatEuro(capital)}</td>
+                    <td class="currency" style="color: #743db6;">${formatEuro(capital)}</td>
                 `;
             }
 
@@ -479,8 +480,8 @@
                         {
                             label: 'Scénario Principal',
                             data: scenarioPrincipal.evolution,
-                            borderColor: '#764ba2',
-                            backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                            borderColor: '#743db6',
+                            backgroundColor: 'rgba(116, 61, 182, 0.12)',
                             borderWidth: 3,
                             tension: 0.4,
                             fill: true
@@ -488,7 +489,7 @@
                         {
                             label: 'Versements Principal',
                             data: scenarioPrincipal.versements,
-                            borderColor: '#764ba2',
+                            borderColor: '#743db6',
                             backgroundColor: 'transparent',
                             borderWidth: 2,
                             borderDash: [5, 5],
@@ -499,8 +500,8 @@
                         {
                             label: 'Scénario 1',
                             data: scenario1.evolution,
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderColor: '#4dd4bf',
+                            backgroundColor: 'rgba(77, 212, 191, 0.12)',
                             borderWidth: 3,
                             tension: 0.4,
                             fill: true
@@ -508,7 +509,7 @@
                         {
                             label: 'Versements Scénario 1',
                             data: scenario1.versements,
-                            borderColor: '#3b82f6',
+                            borderColor: '#4dd4bf',
                             backgroundColor: 'transparent',
                             borderWidth: 2,
                             borderDash: [5, 5],
