@@ -457,6 +457,9 @@
             // Calcul des scénarios de comparaison
             const scenario1 = calculerScenario(montantInitial1, tauxInteret1, montantMensuel1, nbAnnees);
             const scenarioPrincipal = calculerScenario(montantInitial, tauxInteret, montantMensuel, nbAnnees);
+            const scenarioPrincipalScaled = {
+                evolution: scenarioPrincipal.evolution.map(v => v * 0.828)
+            };
 
             // Création du graphique de comparaison
             const ctx = document.getElementById('comparisonChart').getContext('2d');
@@ -485,6 +488,16 @@
                             fill: true
                         },
                         {
+                            label: 'Après prélèvements sociaux',
+                            data: scenarioPrincipalScaled.evolution,
+                            borderColor: '#F5276C',
+                            backgroundColor: 'rgba(245, 39, 108, 0.10)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            hidden: true
+                        },
+                        {
                             label: 'Versements Principal',
                             data: scenarioPrincipal.versements,
                             borderColor: '#743db6',
@@ -496,16 +509,17 @@
                             pointRadius: 0
                         },
                         {
-                            label: 'Scénario 1',
+                            label: 'Second Scénario',
                             data: scenario1.evolution,
                             borderColor: '#4dd4bf',
                             backgroundColor: 'rgba(77, 212, 191, 0.12)',
                             borderWidth: 3,
                             tension: 0.4,
-                            fill: true
+                            fill: true,
+                            hidden: true
                         },
                         {
-                            label: 'Versements Scénario 1',
+                            label: 'Versements Second Scénario',
                             data: scenario1.versements,
                             borderColor: '#4dd4bf',
                             backgroundColor: 'transparent',
@@ -513,6 +527,7 @@
                             borderDash: [5, 5],
                             tension: 0.4,
                             fill: false,
+                            hidden: true,
                             pointRadius: 0
                         }
                     ]
