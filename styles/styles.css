@@ -19,6 +19,11 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+[data-theme="dark"] .body {
+    background: var(--bg-primary);
+    color: var(--text-dark);
+}
+
 /* Variables CSS */
 :root {
     --primary-color: #274f51;
