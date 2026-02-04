@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertisseur de Devises</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MesCalculateurs</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="vitesse-allure.html">Vitesse/Allure</a></li>
+                <li><a href="salaire.html">Salaire</a></li>
+                <li><a href="dca.html">DCA</a></li>
+                <li><a href="interets-composes.html">Intérêts</a></li>
+                <li><a href="devises.html">Devises</a></li>
+                <li><a href="imc.html">IMC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <header class="page-header">
+            <h1>💱 Convertisseur de Devises</h1>
+            <p class="subtitle">Convertissez facilement entre différentes devises</p>
+        </header>
+
+        <div class="calculator-container">
+            <div class="input-group">
+                <label for="montant">Montant à convertir</label>
+                <input type="number" id="montant" step="0.01" value="100" min="0">
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="devise-source">De</label>
+                    <select id="devise-source">
+                        <option value="EUR" selected>EUR - Euro</option>
+                        <option value="USD">USD - Dollar américain</option>
+                        <option value="GBP">GBP - Livre sterling</option>
+                        <option value="CHF">CHF - Franc suisse</option>
+                        <option value="JPY">JPY - Yen japonais</option>
+                        <option value="CAD">CAD - Dollar canadien</option>
+                        <option value="AUD">AUD - Dollar australien</option>
+                        <option value="CNY">CNY - Yuan chinois</option>
+                        <option value="INR">INR - Roupie indienne</option>
+                        <option value="BRL">BRL - Real brésilien</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="devise-cible">Vers</label>
+                    <select id="devise-cible">
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="USD" selected>USD - Dollar américain</option>
+                        <option value="GBP">GBP - Livre sterling</option>
+                        <option value="CHF">CHF - Franc suisse</option>
+                        <option value="JPY">JPY - Yen japonais</option>
+                        <option value="CAD">CAD - Dollar canadien</option>
+                        <option value="AUD">AUD - Dollar australien</option>
+                        <option value="CNY">CNY - Yuan chinois</option>
+                        <option value="INR">INR - Roupie indienne</option>
+                        <option value="BRL">BRL - Real brésilien</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="result-box">
+                <h3>Résultat de la conversion</h3>
+                <div class="result-value" id="resultat">109.00 USD</div>
+                <p style="opacity: 0.9; margin-top: 0.5rem;">
+                    Taux : 1 EUR = <span id="taux-affiche">1.0900</span> USD
+                </p>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Conversions rapides</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4 id="conv-label-1">1 EUR</h4>
+                        <div class="value" id="conv-value-1">1.09 USD</div>
+                    </div>
+                    <div class="result-item">
+                        <h4 id="conv-label-2">10 EUR</h4>
+                        <div class="value" id="conv-value-2">10.90 USD</div>
+                    </div>
+                    <div class="result-item">
+                        <h4 id="conv-label-3">100 EUR</h4>
+                        <div class="value" id="conv-value-3">109.00 USD</div>
+                    </div>
+                    <div class="result-item">
+                        <h4 id="conv-label-4">1000 EUR</h4>
+                        <div class="value" id="conv-value-4">1 090.00 USD</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <p><strong>💡 Note :</strong> Les taux de change utilisés sont des taux indicatifs de février 2026. 
+                Pour des transactions réelles, consultez votre banque ou un bureau de change car les taux peuvent varier 
+                et des frais de conversion s'appliquent généralement.</p>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h3>Conversions populaires</h3>
+            <div class="examples-grid">
+                <div class="example-btn" onclick="setConversion(100, 'EUR', 'USD')">
+                    <h4>EUR → USD</h4>
+                    <div class="value">100 €</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">vers Dollar US</p>
+                </div>
+                <div class="example-btn" onclick="setConversion(100, 'USD', 'EUR')">
+                    <h4>USD → EUR</h4>
+                    <div class="value">100 $</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">vers Euro</p>
+                </div>
+                <div class="example-btn" onclick="setConversion(100, 'EUR', 'GBP')">
+                    <h4>EUR → GBP</h4>
+                    <div class="value">100 €</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">vers Livre</p>
+                </div>
+                <div class="example-btn" onclick="setConversion(100, 'EUR', 'CHF')">
+                    <h4>EUR → CHF</h4>
+                    <div class="value">100 €</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">vers Franc suisse</p>
+                </div>
+                <div class="example-btn" onclick="setConversion(10000, 'JPY', 'EUR')">
+                    <h4>JPY → EUR</h4>
+                    <div class="value">10 000 ¥</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">vers Euro</p>
+                </div>
+                <div class="example-btn" onclick="setConversion(1000, 'EUR', 'CNY')">
+                    <h4>EUR → CNY</h4>
+                    <div class="value">1 000 €</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">vers Yuan</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Taux de change indicatifs</h2>
+            <p style="margin-bottom: 1.5rem;">
+                Voici les principaux taux de change par rapport à l'Euro (approximatifs pour février 2026) :
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="info-box">
+                    <p><strong>1 EUR =</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 0.5rem;">
+                        <li>💵 1.09 USD (Dollar américain)</li>
+                        <li>💷 0.85 GBP (Livre sterling)</li>
+                        <li>🇨🇭 0.95 CHF (Franc suisse)</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <p><strong>1 EUR =</strong></p>
+                    <ul style="list-style: none; padding: 0; margin-top: 0.5rem;">
+                        <li>💴 163.50 JPY (Yen japonais)</li>
+                        <li>🇨🇦 1.48 CAD (Dollar canadien)</li>
+                        <li>🇦🇺 1.66 AUD (Dollar australien)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MesCalculateurs - Tous droits réservés</p>
+            <p><a href="index.html" style="color: var(--primary-color);">← Découvrir plus d'outils</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Taux de change indicatifs (par rapport à l'EUR) - Février 2026
+        const TAUX = {
+            EUR: 1.0,
+            USD: 1.09,
+            GBP: 0.85,
+            CHF: 0.95,
+            JPY: 163.50,
+            CAD: 1.48,
+            AUD: 1.66,
+            CNY: 7.85,
+            INR: 90.50,
+            BRL: 5.42
+        };
+
+        function formatNumber(num, decimals = 2) {
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(num);
+        }
+
+        function convertDevise() {
+            const montant = parseFloat(document.getElementById('montant').value) || 0;
+            const deviseSource = document.getElementById('devise-source').value;
+            const deviseCible = document.getElementById('devise-cible').value;
+
+            // Convertir d'abord en EUR, puis en devise cible
+            const montantEUR = montant / TAUX[deviseSource];
+            const resultat = montantEUR * TAUX[deviseCible];
+            const taux = TAUX[deviseCible] / TAUX[deviseSource];
+
+            // Déterminer le nombre de décimales selon la devise
+            const decimals = (deviseCible === 'JPY' || deviseCible === 'INR') ? 0 : 2;
+
+            // Afficher le résultat
+            document.getElementById('resultat').textContent = formatNumber(resultat, decimals) + ' ' + deviseCible;
+            document.getElementById('taux-affiche').textContent = formatNumber(taux, 4);
+
+            // Mettre à jour le texte du taux
+            document.querySelector('.result-box p').innerHTML = 
+                `Taux : 1 ${deviseSource} = <span id="taux-affiche">${formatNumber(taux, 4)}</span> ${deviseCible}`;
+
+            // Conversions rapides
+            const montants = [1, 10, 100, 1000];
+            montants.forEach((m, index) => {
+                const conv = (m / TAUX[deviseSource]) * TAUX[deviseCible];
+                document.getElementById(`conv-label-${index + 1}`).textContent = `${m} ${deviseSource}`;
+                document.getElementById(`conv-value-${index + 1}`).textContent = formatNumber(conv, decimals) + ' ' + deviseCible;
+            });
+        }
+
+        function setConversion(montant, source, cible) {
+            document.getElementById('montant').value = montant;
+            document.getElementById('devise-source').value = source;
+            document.getElementById('devise-cible').value = cible;
+            convertDevise();
+        }
+
+        // Ajouter les écouteurs d'événements
+        document.getElementById('montant').addEventListener('input', convertDevise);
+        document.getElementById('devise-source').addEventListener('change', convertDevise);
+        document.getElementById('devise-cible').addEventListener('change', convertDevise);
+
+        // Initialiser
+        convertDevise();
+    </script>
+</body>
+</html>

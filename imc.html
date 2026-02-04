@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur IMC (Indice de Masse Corporelle)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MesCalculateurs</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="vitesse-allure.html">Vitesse/Allure</a></li>
+                <li><a href="salaire.html">Salaire</a></li>
+                <li><a href="dca.html">DCA</a></li>
+                <li><a href="interets-composes.html">Intérêts</a></li>
+                <li><a href="devises.html">Devises</a></li>
+                <li><a href="imc.html">IMC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <header class="page-header">
+            <h1>⚖️ Calculateur IMC</h1>
+            <p class="subtitle">Calculez votre Indice de Masse Corporelle et interprétez le résultat</p>
+        </header>
+
+        <div class="calculator-container">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="poids">Poids (kg)</label>
+                    <input type="number" id="poids" step="0.1" value="70" min="20" max="300">
+                </div>
+                <div class="input-group">
+                    <label for="taille">Taille (cm)</label>
+                    <input type="number" id="taille" step="1" value="175" min="100" max="250">
+                </div>
+            </div>
+
+            <div class="result-box" id="result-box">
+                <h3>Votre IMC</h3>
+                <div class="result-value" id="imc-value">22.9</div>
+                <p style="opacity: 0.9; margin-top: 0.5rem;">
+                    <span id="categorie">Corpulence normale</span>
+                </p>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Échelle de l'IMC</h3>
+                <div style="background: linear-gradient(to right, #3b82f6, #10b981, #fbbf24, #f97316, #ef4444); height: 30px; border-radius: 15px; margin-bottom: 1rem;"></div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary);">
+                    <span>16</span>
+                    <span>18.5</span>
+                    <span>25</span>
+                    <span>30</span>
+                    <span>35</span>
+                    <span>40</span>
+                </div>
+                <div style="position: relative; height: 30px; margin-top: 0.5rem;">
+                    <div id="indicator" style="position: absolute; width: 3px; height: 30px; background: #1e293b; transform: translateX(-50%); left: 50%;"></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Détails du calcul</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4>Poids actuel</h4>
+                        <div class="value" id="detail-poids">70 kg</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Poids idéal min</h4>
+                        <div class="value" id="poids-min">57 kg</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Poids idéal max</h4>
+                        <div class="value" id="poids-max">77 kg</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>À perdre/prendre</h4>
+                        <div class="value" id="diff-poids">Dans la norme</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <p><strong>💡 Formule :</strong> IMC = Poids (kg) / [Taille (m)]²</p>
+                <p style="margin-top: 0.5rem;">L'IMC est un indicateur simple permettant d'estimer la corpulence. 
+                Il ne prend pas en compte la masse musculaire ni la répartition des graisses.</p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Classification de l'IMC selon l'OMS</h2>
+            <div style="margin-top: 1.5rem;">
+                <div style="display: grid; gap: 1rem;">
+                    <div style="display: flex; align-items: center; padding: 1rem; background: #eff6ff; border-radius: 8px;">
+                        <div style="width: 10px; height: 40px; background: #3b82f6; border-radius: 5px; margin-right: 1rem;"></div>
+                        <div>
+                            <strong>Maigreur (IMC &lt; 18.5)</strong>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Peut indiquer une dénutrition ou des troubles alimentaires</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 1rem; background: #f0fdf4; border-radius: 8px;">
+                        <div style="width: 10px; height: 40px; background: #10b981; border-radius: 5px; margin-right: 1rem;"></div>
+                        <div>
+                            <strong>Corpulence normale (IMC 18.5 - 24.9)</strong>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Poids considéré comme optimal pour la santé</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 1rem; background: #fef3c7; border-radius: 8px;">
+                        <div style="width: 10px; height: 40px; background: #fbbf24; border-radius: 5px; margin-right: 1rem;"></div>
+                        <div>
+                            <strong>Surpoids (IMC 25 - 29.9)</strong>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Risque accru de problèmes de santé</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 1rem; background: #ffedd5; border-radius: 8px;">
+                        <div style="width: 10px; height: 40px; background: #f97316; border-radius: 5px; margin-right: 1rem;"></div>
+                        <div>
+                            <strong>Obésité modérée (IMC 30 - 34.9)</strong>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Risque important pour la santé</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 1rem; background: #fee2e2; border-radius: 8px;">
+                        <div style="width: 10px; height: 40px; background: #ef4444; border-radius: 5px; margin-right: 1rem;"></div>
+                        <div>
+                            <strong>Obésité sévère (IMC ≥ 35)</strong>
+                            <p style="margin: 0; color: var(--text-secondary); font-size: 0.875rem;">Risque très élevé, suivi médical recommandé</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box" style="margin-top: 2rem;">
+                <p><strong>⚠️ Limites de l'IMC :</strong> L'IMC ne fait pas la différence entre masse grasse et masse musculaire. 
+                Un athlète très musclé peut avoir un IMC élevé sans être en surpoids. Pour une évaluation précise, 
+                consultez un professionnel de santé.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MesCalculateurs - Tous droits réservés</p>
+            <p><a href="index.html" style="color: var(--primary-color);">← Découvrir plus d'outils</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function formatNumber(num, decimals = 1) {
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(num);
+        }
+
+        function getCategorie(imc) {
+            if (imc < 16.5) return { nom: 'Dénutrition', color: '#3b82f6' };
+            if (imc < 18.5) return { nom: 'Maigreur', color: '#3b82f6' };
+            if (imc < 25) return { nom: 'Corpulence normale', color: '#10b981' };
+            if (imc < 30) return { nom: 'Surpoids', color: '#fbbf24' };
+            if (imc < 35) return { nom: 'Obésité modérée', color: '#f97316' };
+            return { nom: 'Obésité sévère', color: '#ef4444' };
+        }
+
+        function calculateIMC() {
+            const poids = parseFloat(document.getElementById('poids').value) || 0;
+            const tailleCm = parseFloat(document.getElementById('taille').value) || 0;
+            const tailleM = tailleCm / 100;
+
+            if (tailleM <= 0 || poids <= 0) return;
+
+            const imc = poids / (tailleM * tailleM);
+            const categorie = getCategorie(imc);
+
+            // Calculer les poids idéaux (IMC entre 18.5 et 24.9)
+            const poidsMin = 18.5 * tailleM * tailleM;
+            const poidsMax = 24.9 * tailleM * tailleM;
+
+            let diffPoids = '';
+            if (imc < 18.5) {
+                const aPrend = poidsMin - poids;
+                diffPoids = '+' + formatNumber(aPrend, 1) + ' kg';
+            } else if (imc > 24.9) {
+                const aPerdre = poids - poidsMax;
+                diffPoids = '-' + formatNumber(aPerdre, 1) + ' kg';
+            } else {
+                diffPoids = 'Dans la norme';
+            }
+
+            // Mettre à jour l'affichage
+            document.getElementById('imc-value').textContent = formatNumber(imc, 1);
+            document.getElementById('categorie').textContent = categorie.nom;
+            document.getElementById('detail-poids').textContent = formatNumber(poids, 1) + ' kg';
+            document.getElementById('poids-min').textContent = formatNumber(poidsMin, 0) + ' kg';
+            document.getElementById('poids-max').textContent = formatNumber(poidsMax, 0) + ' kg';
+            document.getElementById('diff-poids').textContent = diffPoids;
+
+            // Changer la couleur du résultat
+            const resultBox = document.getElementById('result-box');
+            resultBox.style.background = `linear-gradient(135deg, ${categorie.color}, ${categorie.color}dd)`;
+
+            // Positionner l'indicateur sur l'échelle
+            let position = 0;
+            if (imc < 16) position = 0;
+            else if (imc >= 40) position = 100;
+            else {
+                // Échelle de 16 à 40
+                position = ((imc - 16) / (40 - 16)) * 100;
+            }
+            document.getElementById('indicator').style.left = position + '%';
+        }
+
+        // Ajouter les écouteurs d'événements
+        document.getElementById('poids').addEventListener('input', calculateIMC);
+        document.getElementById('taille').addEventListener('input', calculateIMC);
+        document.getElementById('sexe').addEventListener('change', calculateIMC);
+
+        // Initialiser
+        calculateIMC();
+    </script>
+</body>
+</html>

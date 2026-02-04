@@ -3,137 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estimateur de Revenus en Bourse</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="./styles/styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Calculateurs & Convertisseurs - Outils en ligne gratuits</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="body">
-    <!-- Navigation -->
+<body>
     <nav class="navbar">
         <div class="container">
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="#accueil" class="navbar-brand">💰 Estimateur Bourse</a>
-            </div>
+            <a href="index.html" class="logo">MesCalculateurs</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="vitesse-allure.html">Vitesse/Allure</a></li>
+                <li><a href="salaire.html">Salaire</a></li>
+                <li><a href="dca.html">DCA</a></li>
+                <li><a href="interets-composes.html">Intérêts</a></li>
+                <li><a href="devises.html">Devises</a></li>
+                <li><a href="imc.html">IMC</a></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="accueil" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>💰 Estimateur de Revenus en Bourse</h1>
-                <p class="subtitle">Planifiez votre avenir financier avec notre calculateur d'investissement</p>
-                <p>Découvrez comment vos investissements peuvent croître au fil du temps grâce aux intérêts composés. Comparez différents scénarios et visualisez l'évolution de votre portefeuille.</p>
-            </div>
+    <div class="container main-content">
+        <header class="hero">
+            <h1>Calculateurs & Convertisseurs en ligne</h1>
+            <p class="subtitle">Des outils gratuits et faciles à utiliser pour vos calculs du quotidien</p>
+        </header>
+
+        <div class="tools-grid">
+            <a href="vitesse-allure.html" class="tool-card">
+                <div class="tool-icon">🏃</div>
+                <h2>Convertisseur Vitesse ↔ Allure</h2>
+                <p>Convertissez entre km/h, min/km et min/mile. Parfait pour la course à pied.</p>
+                <span class="category">Sport</span>
+            </a>
+
+            <a href="salaire.html" class="tool-card">
+                <div class="tool-icon">💰</div>
+                <h2>Calculateur Salaire Net ↔ Brut</h2>
+                <p>Calculez votre salaire net à partir du brut (ou vice-versa) en France.</p>
+                <span class="category">Finance</span>
+            </a>
+
+            <a href="dca.html" class="tool-card">
+                <div class="tool-icon">📈</div>
+                <h2>Simulateur DCA</h2>
+                <p>Simulez une stratégie Dollar Cost Averaging pour vos investissements.</p>
+                <span class="category">Investissement</span>
+            </a>
+
+            <a href="interets-composes.html" class="tool-card">
+                <div class="tool-icon">💎</div>
+                <h2>Calculateur d'Intérêts Composés</h2>
+                <p>Calculez la croissance de votre capital avec les intérêts composés.</p>
+                <span class="category">Finance</span>
+            </a>
+
+            <a href="devises.html" class="tool-card">
+                <div class="tool-icon">💱</div>
+                <h2>Convertisseur de Devises</h2>
+                <p>Convertissez entre différentes devises avec les taux actuels.</p>
+                <span class="category">Conversion</span>
+            </a>
+
+            <a href="imc.html" class="tool-card">
+                <div class="tool-icon">⚖️</div>
+                <h2>Calculateur IMC</h2>
+                <p>Calculez votre Indice de Masse Corporelle et interprétez le résultat.</p>
+                <span class="category">Santé</span>
+            </a>
+
+            <a href="tva.html" class="tool-card">
+                <div class="tool-icon">🧾</div>
+                <h2>Calculateur TVA</h2>
+                <p>Ajoutez ou retirez la TVA (20%, 10%, 5.5%, 2.1%) facilement.</p>
+                <span class="category">Finance</span>
+            </a>
         </div>
-    </section>
 
-    <!-- Main Section -->
-    <section class="section bg-light">
+        <section class="info-section">
+            <h2>Des outils simples et efficaces</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Calculs instantanés</h3>
+                    <p>Tous les résultats sont mis à jour en temps réel pendant la saisie.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>100% gratuit</h3>
+                    <p>Tous les outils sont gratuits et sans publicité intrusive.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Aucune donnée stockée</h3>
+                    <p>Tous les calculs sont effectués localement dans votre navigateur.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
         <div class="container">
-            <h2 class="section-title">Vos Paramètres d'Investissement</h2>
-            
-            <div class="row g-3 scenarios-grid">
-                <div class="col-12 col-md-6">
-                    <div class="scenario-card h-100">
-                        <h3><i class="fas fa-chart-line"></i> Scénario Principal</h3>
-                        <div class="input-group">
-                            <label for="montantInitial">Montant initial (€)</label>
-                            <input type="number" id="montantInitial" value="10000" min="0" step="100">
-                        </div>
-                        <div class="input-group">
-                            <label for="tauxInteret">Taux d'intérêt annuel (%)</label>
-                            <input type="number" id="tauxInteret" value="7" min="0" max="100" step="0.1">
-                        </div>
-                        <div class="input-group">
-                            <label for="montantMensuel">Montant mensuel (€)</label>
-                            <input type="number" id="montantMensuel" value="500" min="0" step="50">
-                        </div>
-                        <div class="input-group">
-                            <label for="nbAnnees">Nombre d'années</label>
-                            <input type="number" id="nbAnnees" value="20" min="1" max="50" step="1">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="scenario-card h-100">
-                        <h3><i class="fas fa-chart-bar"></i> Second Scénario</h3>
-                        <div class="input-group">
-                            <label for="montantInitial1">Montant initial (€)</label>
-                            <input type="number" id="montantInitial1" value="" min="0" step="100">
-                        </div>
-                        <div class="input-group">
-                            <label for="tauxInteret1">Taux annuel (%)</label>
-                            <input type="number" id="tauxInteret1" value="" min="0" max="100" step="0.1">
-                        </div>
-                        <div class="input-group">
-                            <label for="montantMensuel1">Montant mensuel (€)</label>
-                            <input type="number" id="montantMensuel1" value="" min="0" step="50">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn btn-primary" onclick="calculer()" style="width: 100%; margin-top: 30px;">
-                <i class="fas fa-calculator"></i> Calculer mes revenus
-            </button>
-
-            <!-- Results Section -->
-            <div class="results" id="results">
-                <h2 class="section-title" style="margin-top: 50px;">Résultats</h2>
-                
-                <div class="result-card">
-                    <div class="result-main">Valeur finale de votre portefeuille</div>
-                    <div class="result-value" id="valeurFinale">0 €</div>
-                    
-                    <div class="result-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Total investi</span>
-                            <span class="detail-value" id="totalInvesti">0 €</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Intérêts gagnés</span>
-                            <span class="detail-value" id="interetsGagnes">0 €</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Rendement total</span>
-                            <span class="detail-value" id="rendementTotal">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="comparison-chart">
-                    <h3><i class="fas fa-chart-area"></i> Comparaison des scénarios</h3>
-                    <canvas id="comparisonChart"></canvas>
-                </div>
-
-                <div class="chart-container">
-                    <h3><i class="fas fa-table"></i> Évolution année par année</h3>
-                    <div class="table-responsive">
-                        <table id="tableauEvolution" class="table table-hover align-middle">
-                            <thead>
-                                <tr>
-                                    <th class="text-start">Année</th>
-                                    <th class="text-end">Versements</th>
-                                    <th class="text-end">Intérêts</th>
-                                    <th class="text-end">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <p>&copy; 2026 MesCalculateurs - Tous droits réservés</p>
+            <p>Outils de calcul et de conversion gratuits en ligne</p>
         </div>
-    </section>
-
-    <script src="./scripts/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </footer>
 </body>
 </html>

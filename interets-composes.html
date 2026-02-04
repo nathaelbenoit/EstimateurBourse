@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur d'Intérêts Composés</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MesCalculateurs</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="vitesse-allure.html">Vitesse/Allure</a></li>
+                <li><a href="salaire.html">Salaire</a></li>
+                <li><a href="dca.html">DCA</a></li>
+                <li><a href="interets-composes.html">Intérêts</a></li>
+                <li><a href="devises.html">Devises</a></li>
+                <li><a href="imc.html">IMC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <header class="page-header">
+            <h1>💎 Calculateur d'Intérêts Composés</h1>
+            <p class="subtitle">Calculez la croissance de votre capital avec la puissance des intérêts composés</p>
+        </header>
+
+        <div class="calculator-container">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="capital-initial">Capital initial (€)</label>
+                    <input type="number" id="capital-initial" step="100" value="3000" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="contribution">Contribution mensuelle (€)</label>
+                    <input type="number" id="contribution" step="10" value="200" min="0">
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="taux">Taux d'intérêt annuel (%)</label>
+                    <input type="number" id="taux" step="0.1" value="7" min="0" max="100">
+                </div>
+                <div class="input-group">
+                    <label for="duree">Durée (années)</label>
+                    <input type="number" id="duree" step="1" value="20" min="1" max="100">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="frequence">Fréquence de capitalisation</label>
+                <select id="frequence">
+                    <option value="12">Mensuelle</option>
+                    <option value="4">Trimestrielle</option>
+                    <option value="2">Semestrielle</option>
+                    <option value="1" selected>Annuelle</option>
+                </select>
+            </div>
+
+            <div class="result-box">
+                <h3>Capital final après <span id="duree-display">20</span> ans</h3>
+                <div class="result-value" id="capital-final">97 382 €</div>
+                <p style="opacity: 0.9; margin-top: 0.5rem;">
+                    Dont <span id="interets-gagnes">47 382 €</span> d'intérêts
+                </p>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Répartition du capital</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4>Capital investi</h4>
+                        <div class="value" id="total-investi">50 000 €</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Intérêts générés</h4>
+                        <div class="value" id="interets-total">47 382 €</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Croissance totale</h4>
+                        <div class="value" id="croissance">+95%</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Rendement annuel moyen</h4>
+                        <div class="value" id="rendement-annuel">7.0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Évolution du capital dans le temps</h3>
+                <div style="position: relative; height: 400px;">
+                    <canvas id="interestChart"></canvas>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <p><strong>💡 Le pouvoir des intérêts composés :</strong> Albert Einstein aurait dit que les intérêts 
+                composés sont "la huitième merveille du monde". Contrairement aux intérêts simples, les intérêts composés 
+                permettent de générer des intérêts sur les intérêts déjà gagnés, créant un effet boule de neige exponentiel.</p>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h3>Scénarios d'épargne</h3>
+            <div class="examples-grid">
+                <div class="example-btn" onclick="setExample(5000, 100, 5, 10)">
+                    <h4>LIVRET A</h4>
+                    <div class="value">5% / 10 ans</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">5 000 € + 100 €/mois</p>
+                </div>
+                <div class="example-btn" onclick="setExample(10000, 200, 7, 20)">
+                    <h4>PEA ACTIONS</h4>
+                    <div class="value">7% / 20 ans</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">10 000 € + 200 €/mois</p>
+                </div>
+                <div class="example-btn" onclick="setExample(20000, 500, 8, 25)">
+                    <h4>PORTEFEUILLE DIVERSIFIÉ</h4>
+                    <div class="value">8% / 25 ans</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">20 000 € + 500 €/mois</p>
+                </div>
+                <div class="example-btn" onclick="setExample(1000, 50, 10, 30)">
+                    <h4>INVESTISSEMENT AGRESSIF</h4>
+                    <div class="value">10% / 30 ans</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">1 000 € + 50 €/mois</p>
+                </div>
+                <div class="example-btn" onclick="setExample(50000, 0, 4, 15)">
+                    <h4>CAPITAL SANS VERSEMENT</h4>
+                    <div class="value">4% / 15 ans</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">50 000 € seuls</p>
+                </div>
+                <div class="example-btn" onclick="setExample(0, 300, 6, 40)">
+                    <h4>RETRAITE ANTICIPÉE</h4>
+                    <div class="value">6% / 40 ans</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">300 €/mois dès maintenant</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Comprendre les intérêts composés</h2>
+            <p style="margin-bottom: 1rem;">
+                Les <strong>intérêts composés</strong> sont des intérêts calculés non seulement sur le capital initial, 
+                mais aussi sur les intérêts accumulés précédemment. C'est la différence entre une croissance linéaire et 
+                une croissance exponentielle.
+            </p>
+            
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">La formule mathématique</h3>
+            <div class="info-box">
+                <p><strong>Formule :</strong> VF = VI × (1 + r/n)^(n×t) + C × [((1 + r/n)^(n×t) - 1) / (r/n)]</p>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem;">
+                    Où VF = Valeur Future, VI = Valeur Initiale, r = taux annuel, n = fréquence, t = temps, C = contribution
+                </p>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Facteurs clés de réussite</h3>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Le temps</h3>
+                    <p>Plus vous commencez tôt, plus l'effet des intérêts composés sera important. Chaque année compte !</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Le taux</h3>
+                    <p>Un taux d'intérêt plus élevé accélère la croissance, mais attention aux risques associés.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Les contributions</h3>
+                    <p>Des versements réguliers, même modestes, peuvent faire une énorme différence sur le long terme.</p>
+                </div>
+            </div>
+
+            <div class="warning-box" style="margin-top: 2rem;">
+                <p><strong>⚠️ Important :</strong> Cette calculatrice utilise des hypothèses simplifiées et ne tient pas 
+                compte de l'inflation, des frais, des impôts ou de la volatilité des marchés. Les rendements futurs ne sont 
+                jamais garantis.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MesCalculateurs - Tous droits réservés</p>
+            <p><a href="index.html" style="color: var(--primary-color);">← Découvrir plus d'outils</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let interestChart = null;
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(Math.round(num));
+        }
+
+        function formatDecimal(num, decimals = 1) {
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(num);
+        }
+
+        function calculateCompoundInterest() {
+            const capitalInitial = parseFloat(document.getElementById('capital-initial').value) || 0;
+            const contribution = parseFloat(document.getElementById('contribution').value) || 0;
+            const tauxAnnuel = parseFloat(document.getElementById('taux').value) / 100 || 0;
+            const duree = parseInt(document.getElementById('duree').value) || 1;
+            const frequence = parseInt(document.getElementById('frequence').value);
+
+            const contributionAnnuelle = contribution * 12;
+            const periodes = duree;
+
+            // Calculer l'évolution année par année
+            const years = [];
+            const capitalData = [];
+            const interetsData = [];
+            const totalInvesti = [];
+
+            let capital = capitalInitial;
+            let totalContributions = capitalInitial;
+
+            for (let year = 0; year <= periodes; year++) {
+                years.push(year);
+                
+                if (year > 0) {
+                    // Intérêts composés sur le capital existant
+                    capital = capital * Math.pow(1 + tauxAnnuel / frequence, frequence);
+                    
+                    // Ajouter la contribution annuelle avec intérêts pour chaque période
+                    for (let period = 0; period < 12; period++) {
+                        const monthsRemaining = 12 - period;
+                        const periodsRemaining = (monthsRemaining / 12) * frequence;
+                        capital += contribution * Math.pow(1 + tauxAnnuel / frequence, periodsRemaining);
+                    }
+                    
+                    totalContributions += contributionAnnuelle;
+                }
+
+                const interets = capital - totalContributions;
+                
+                capitalData.push(capital);
+                interetsData.push(interets);
+                totalInvesti.push(totalContributions);
+            }
+
+            const capitalFinal = capitalData[capitalData.length - 1];
+            const totalInvestiFinal = totalInvesti[totalInvesti.length - 1];
+            const interetsTotaux = capitalFinal - totalInvestiFinal;
+            const croissance = ((capitalFinal - totalInvestiFinal) / totalInvestiFinal) * 100;
+
+            // Mettre à jour l'affichage
+            document.getElementById('duree-display').textContent = duree;
+            document.getElementById('capital-final').textContent = formatNumber(capitalFinal) + ' €';
+            document.getElementById('interets-gagnes').textContent = formatNumber(interetsTotaux) + ' €';
+            document.getElementById('total-investi').textContent = formatNumber(totalInvestiFinal) + ' €';
+            document.getElementById('interets-total').textContent = formatNumber(interetsTotaux) + ' €';
+            document.getElementById('croissance').textContent = '+' + formatDecimal(croissance, 0) + '%';
+            document.getElementById('rendement-annuel').textContent = formatDecimal(tauxAnnuel * 100, 1) + '%';
+
+            // Mettre à jour le graphique
+            updateChart(years, capitalData, totalInvesti, interetsData);
+        }
+
+        function updateChart(years, capitalData, investiData, interetsData) {
+            const ctx = document.getElementById('interestChart').getContext('2d');
+            const isMobile = window.innerWidth <= 768;
+            
+            // Adapter les labels pour mobile
+            let labels;
+            const totalYears = years.length;
+            if (isMobile && totalYears > 15) {
+                // Afficher 1 label sur 5 pour les longues durées
+                labels = years.map((y, i) => 
+                    (i % 5 === 0 || i === totalYears - 1) ? `A${y}` : ''
+                );
+            } else if (isMobile) {
+                labels = years.map(y => `A${y}`);
+            } else {
+                labels = years.map(y => `Année ${y}`);
+            }
+
+            if (interestChart) {
+                interestChart.destroy();
+            }
+
+            interestChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: isMobile ? 'Investi' : 'Capital investi',
+                            data: investiData,
+                            borderColor: '#8BA194',
+                            backgroundColor: 'rgba(139, 161, 148, 0.15)',
+                            borderWidth: isMobile ? 1.5 : 2,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: isMobile ? 0 : 2,
+                            pointHoverRadius: isMobile ? 4 : 5
+                        },
+                        {
+                            label: isMobile ? 'Intérêts' : 'Intérêts générés',
+                            data: interetsData,
+                            borderColor: '#6b8f7a',
+                            backgroundColor: 'rgba(107, 143, 122, 0.15)',
+                            borderWidth: isMobile ? 1.5 : 2,
+                            fill: true,
+                            tension: 0.1,
+                            pointRadius: isMobile ? 0 : 2,
+                            pointHoverRadius: isMobile ? 4 : 5
+                        },
+                        {
+                            label: isMobile ? 'Total' : 'Capital total',
+                            data: capitalData,
+                            borderColor: '#4F633D',
+                            backgroundColor: 'rgba(79, 99, 61, 0.1)',
+                            borderWidth: isMobile ? 2.5 : 3,
+                            fill: false,
+                            tension: 0.1,
+                            pointRadius: isMobile ? 0 : 3,
+                            pointHoverRadius: isMobile ? 4 : 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: isMobile ? 10 : 12
+                                },
+                                padding: isMobile ? 6 : 10,
+                                usePointStyle: true,
+                                boxWidth: isMobile ? 8 : 10
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            titleFont: {
+                                size: isMobile ? 11 : 13
+                            },
+                            bodyFont: {
+                                size: isMobile ? 10 : 12
+                            },
+                            padding: isMobile ? 8 : 10,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = isMobile ? context.dataset.label : context.dataset.label + ' ';
+                                    return label + ': ' + formatNumber(context.parsed.y) + ' €';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: isMobile ? 9 : 11
+                                },
+                                maxRotation: isMobile ? 45 : 0,
+                                minRotation: isMobile ? 45 : 0
+                            },
+                            grid: {
+                                display: !isMobile
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: isMobile ? 9 : 11
+                                },
+                                callback: function(value) {
+                                    if (isMobile && value >= 1000) {
+                                        return (value / 1000).toFixed(0) + 'k€';
+                                    }
+                                    return formatNumber(value) + ' €';
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+
+        function setExample(capital, contribution, taux, duree) {
+            document.getElementById('capital-initial').value = capital;
+            document.getElementById('contribution').value = contribution;
+            document.getElementById('taux').value = taux;
+            document.getElementById('duree').value = duree;
+            calculateCompoundInterest();
+        }
+
+        // Ajouter les écouteurs d'événements
+        document.getElementById('capital-initial').addEventListener('input', calculateCompoundInterest);
+        document.getElementById('contribution').addEventListener('input', calculateCompoundInterest);
+        document.getElementById('taux').addEventListener('input', calculateCompoundInterest);
+        document.getElementById('duree').addEventListener('input', calculateCompoundInterest);
+        document.getElementById('frequence').addEventListener('change', calculateCompoundInterest);
+
+        // Initialiser
+        calculateCompoundInterest();
+    </script>
+</body>
+</html>

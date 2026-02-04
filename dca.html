@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur DCA (Dollar Cost Averaging)</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MesCalculateurs</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="vitesse-allure.html">Vitesse/Allure</a></li>
+                <li><a href="salaire.html">Salaire</a></li>
+                <li><a href="dca.html">DCA</a></li>
+                <li><a href="interets-composes.html">Intérêts</a></li>
+                <li><a href="devises.html">Devises</a></li>
+                <li><a href="imc.html">IMC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <header class="page-header">
+            <h1>📈 Simulateur DCA (Dollar Cost Averaging)</h1>
+            <p class="subtitle">Simulez une stratégie d'investissement progressif et régulier</p>
+        </header>
+
+        <div class="calculator-container">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="montant-mensuel">Montant mensuel investi (€)</label>
+                    <input type="number" id="montant-mensuel" step="10" value="200" min="0">
+                </div>
+                <div class="input-group">
+                    <label for="duree">Durée (en mois)</label>
+                    <input type="number" id="duree" step="1" value="36" min="1">
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="prix-initial">Prix initial de l'actif (€)</label>
+                    <input type="number" id="prix-initial" step="0.01" value="100" min="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="prix-final">Prix final de l'actif (€)</label>
+                    <input type="number" id="prix-final" step="0.01" value="150" min="0.01">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="volatilite">Volatilité du marché</label>
+                <select id="volatilite">
+                    <option value="faible">Faible (±5%)</option>
+                    <option value="moyenne" selected>Moyenne (±15%)</option>
+                    <option value="forte">Forte (±30%)</option>
+                </select>
+            </div>
+
+            <div class="result-box">
+                <h3>Résultats de la simulation DCA</h3>
+                <div class="results-grid" style="margin-top: 1.5rem;">
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Total investi</h4>
+                        <div class="result-value" id="total-investi" style="font-size: 1.75rem;">7 200 €</div>
+                    </div>
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Valeur finale</h4>
+                        <div class="result-value" id="valeur-finale" style="font-size: 1.75rem;">8 640 €</div>
+                    </div>
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Plus-value</h4>
+                        <div class="result-value" id="plus-value" style="font-size: 1.75rem;">+1 440 €</div>
+                    </div>
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Rendement</h4>
+                        <div class="result-value" id="rendement" style="font-size: 1.75rem;">+20.0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Évolution du portefeuille</h3>
+                <div style="position: relative; height: 400px;">
+                    <canvas id="dcaChart"></canvas>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Détails supplémentaires</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4>Nombre d'unités achetées</h4>
+                        <div class="value" id="unites">60.5</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Prix moyen d'achat</h4>
+                        <div class="value" id="prix-moyen">119 €</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Évolution du prix</h4>
+                        <div class="value" id="evolution-prix">+50%</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>ROI annualisé</h4>
+                        <div class="value" id="roi-annuel">+7.2%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <p><strong>💡 Qu'est-ce que le DCA ?</strong> Le Dollar Cost Averaging (investissement progressif) 
+                consiste à investir régulièrement un montant fixe, indépendamment du prix du marché. Cette stratégie 
+                permet de lisser le prix d'achat moyen et de réduire l'impact de la volatilité.</p>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h3>Scénarios d'investissement</h3>
+            <div class="examples-grid">
+                <div class="example-btn" onclick="setExample(100, 24, 50, 75)">
+                    <h4>DÉBUTANT</h4>
+                    <div class="value">100 €/mois</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">2 ans • +50% prix</p>
+                </div>
+                <div class="example-btn" onclick="setExample(200, 36, 100, 150)">
+                    <h4>INTERMÉDIAIRE</h4>
+                    <div class="value">200 €/mois</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">3 ans • +50% prix</p>
+                </div>
+                <div class="example-btn" onclick="setExample(500, 60, 30000, 60000)">
+                    <h4>CRYPTO LONG TERME</h4>
+                    <div class="value">500 €/mois</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">5 ans • +100% prix</p>
+                </div>
+                <div class="example-btn" onclick="setExample(300, 48, 400, 500)">
+                    <h4>ACTIONS</h4>
+                    <div class="value">300 €/mois</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">4 ans • +25% prix</p>
+                </div>
+                <div class="example-btn" onclick="setExample(150, 120, 1000, 1200)">
+                    <h4>TRÈS LONG TERME</h4>
+                    <div class="value">150 €/mois</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">10 ans • +20% prix</p>
+                </div>
+                <div class="example-btn" onclick="setExample(250, 36, 100, 80)">
+                    <h4>MARCHÉ BAISSIER</h4>
+                    <div class="value">250 €/mois</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">3 ans • -20% prix</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Pourquoi utiliser la stratégie DCA ?</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📉</div>
+                    <h3>Réduction du risque</h3>
+                    <p>Vous achetez plus d'unités quand le prix est bas et moins quand il est élevé, lissant ainsi votre prix d'achat moyen.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🧘</div>
+                    <h3>Moins de stress</h3>
+                    <p>Pas besoin de "timer" le marché. Vous investissez régulièrement sans vous soucier des fluctuations court terme.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💪</div>
+                    <h3>Discipline d'investissement</h3>
+                    <p>Investir régulièrement force la discipline et aide à construire un patrimoine sur le long terme.</p>
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top: 2rem;">
+                <p><strong>⚠️ Avertissement :</strong> Cette simulation est basée sur des hypothèses simplifiées. 
+                Les performances passées ne garantissent pas les résultats futurs. Tout investissement comporte des risques, 
+                y compris la perte totale du capital investi.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MesCalculateurs - Tous droits réservés</p>
+            <p><a href="index.html" style="color: var(--primary-color);">← Découvrir plus d'outils</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let dcaChart = null;
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(Math.round(num));
+        }
+
+        function formatDecimal(num, decimals = 2) {
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(num);
+        }
+
+        function generatePriceEvolution(prixInitial, prixFinal, duree, volatilite) {
+            const prices = [];
+            const volatiliteValue = {
+                'faible': 0.05,
+                'moyenne': 0.15,
+                'forte': 0.30
+            }[volatilite];
+
+            const trend = (prixFinal - prixInitial) / duree;
+
+            for (let i = 0; i <= duree; i++) {
+                const trendPrice = prixInitial + (trend * i);
+                const randomFactor = 1 + (Math.random() - 0.5) * 2 * volatiliteValue;
+                let price = trendPrice * randomFactor;
+                
+                // S'assurer que le dernier prix est proche du prix final
+                if (i === duree) {
+                    price = prixFinal;
+                }
+                
+                prices.push(Math.max(0.01, price));
+            }
+
+            return prices;
+        }
+
+        function calculateDCA() {
+            const montantMensuel = parseFloat(document.getElementById('montant-mensuel').value) || 0;
+            const duree = parseInt(document.getElementById('duree').value) || 1;
+            const prixInitial = parseFloat(document.getElementById('prix-initial').value) || 1;
+            const prixFinal = parseFloat(document.getElementById('prix-final').value) || 1;
+            const volatilite = document.getElementById('volatilite').value;
+
+            // Générer l'évolution des prix
+            const prices = generatePriceEvolution(prixInitial, prixFinal, duree, volatilite);
+
+            // Calculer les achats mensuels
+            let totalInvesti = 0;
+            let totalUnites = 0;
+            const investiData = [];
+            const valeurData = [];
+
+            for (let i = 0; i < duree; i++) {
+                totalInvesti += montantMensuel;
+                const uniteAchetees = montantMensuel / prices[i];
+                totalUnites += uniteAchetees;
+                
+                investiData.push(totalInvesti);
+                valeurData.push(totalUnites * prices[i]);
+            }
+
+            // Valeur finale
+            const valeurFinale = totalUnites * prixFinal;
+            const plusValue = valeurFinale - totalInvesti;
+            const rendement = (plusValue / totalInvesti) * 100;
+            const prixMoyen = totalInvesti / totalUnites;
+            const evolutionPrix = ((prixFinal - prixInitial) / prixInitial) * 100;
+            const roiAnnuel = (Math.pow(valeurFinale / totalInvesti, 12 / duree) - 1) * 100;
+
+            // Mettre à jour l'affichage
+            document.getElementById('total-investi').textContent = formatNumber(totalInvesti) + ' €';
+            document.getElementById('valeur-finale').textContent = formatNumber(valeurFinale) + ' €';
+            document.getElementById('plus-value').textContent = (plusValue >= 0 ? '+' : '') + formatNumber(plusValue) + ' €';
+            document.getElementById('rendement').textContent = (rendement >= 0 ? '+' : '') + formatDecimal(rendement, 1) + '%';
+            document.getElementById('unites').textContent = formatDecimal(totalUnites, 2);
+            document.getElementById('prix-moyen').textContent = formatNumber(prixMoyen) + ' €';
+            document.getElementById('evolution-prix').textContent = (evolutionPrix >= 0 ? '+' : '') + formatDecimal(evolutionPrix, 1) + '%';
+            document.getElementById('roi-annuel').textContent = (roiAnnuel >= 0 ? '+' : '') + formatDecimal(roiAnnuel, 1) + '%';
+
+            // Mettre à jour le graphique
+            updateChart(duree, investiData, valeurData);
+        }
+
+        function updateChart(duree, investiData, valeurData) {
+            const ctx = document.getElementById('dcaChart').getContext('2d');
+            const isMobile = window.innerWidth <= 768;
+            
+            // Adapter les labels pour mobile
+            let labels;
+            if (isMobile && duree > 12) {
+                // Afficher seulement 1 label sur 3 pour les longues durées
+                labels = Array.from({length: duree}, (_, i) => 
+                    (i % 3 === 0 || i === duree - 1) ? `M${i + 1}` : ''
+                );
+            } else if (isMobile) {
+                labels = Array.from({length: duree}, (_, i) => `M${i + 1}`);
+            } else {
+                labels = Array.from({length: duree}, (_, i) => `Mois ${i + 1}`);
+            }
+
+            if (dcaChart) {
+                dcaChart.destroy();
+            }
+
+            dcaChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: isMobile ? 'Investi' : 'Total investi',
+                            data: investiData,
+                            borderColor: '#8BA194',
+                            backgroundColor: 'rgba(139, 161, 148, 0.1)',
+                            borderWidth: isMobile ? 2 : 2,
+                            tension: 0.1,
+                            pointRadius: isMobile ? 0 : 3,
+                            pointHoverRadius: isMobile ? 4 : 5
+                        },
+                        {
+                            label: isMobile ? 'Valeur' : 'Valeur du portefeuille',
+                            data: valeurData,
+                            borderColor: '#4F633D',
+                            backgroundColor: 'rgba(79, 99, 61, 0.1)',
+                            borderWidth: isMobile ? 2.5 : 3,
+                            tension: 0.1,
+                            pointRadius: isMobile ? 0 : 3,
+                            pointHoverRadius: isMobile ? 4 : 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: isMobile ? 11 : 12
+                                },
+                                padding: isMobile ? 8 : 10,
+                                usePointStyle: true,
+                                boxWidth: isMobile ? 8 : 10
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            titleFont: {
+                                size: isMobile ? 11 : 13
+                            },
+                            bodyFont: {
+                                size: isMobile ? 10 : 12
+                            },
+                            padding: isMobile ? 8 : 10,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = isMobile ? context.dataset.label : context.dataset.label + ' ';
+                                    return label + ': ' + formatNumber(context.parsed.y) + ' €';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: isMobile ? 9 : 11
+                                },
+                                maxRotation: isMobile ? 45 : 0,
+                                minRotation: isMobile ? 45 : 0
+                            },
+                            grid: {
+                                display: !isMobile
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: {
+                                    size: isMobile ? 9 : 11
+                                },
+                                callback: function(value) {
+                                    if (isMobile && value >= 1000) {
+                                        return (value / 1000).toFixed(0) + 'k€';
+                                    }
+                                    return formatNumber(value) + ' €';
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                }
+            });
+        }
+
+        function setExample(montant, duree, prixInitial, prixFinal) {
+            document.getElementById('montant-mensuel').value = montant;
+            document.getElementById('duree').value = duree;
+            document.getElementById('prix-initial').value = prixInitial;
+            document.getElementById('prix-final').value = prixFinal;
+            calculateDCA();
+        }
+
+        // Ajouter les écouteurs d'événements
+        document.getElementById('montant-mensuel').addEventListener('input', calculateDCA);
+        document.getElementById('duree').addEventListener('input', calculateDCA);
+        document.getElementById('prix-initial').addEventListener('input', calculateDCA);
+        document.getElementById('prix-final').addEventListener('input', calculateDCA);
+        document.getElementById('volatilite').addEventListener('change', calculateDCA);
+
+        // Initialiser
+        calculateDCA();
+    </script>
+</body>
+</html>

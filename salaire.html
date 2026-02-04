@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur Salaire Net ↔ Brut (France)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MesCalculateurs</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="vitesse-allure.html">Vitesse/Allure</a></li>
+                <li><a href="salaire.html">Salaire</a></li>
+                <li><a href="dca.html">DCA</a></li>
+                <li><a href="interets-composes.html">Intérêts</a></li>
+                <li><a href="devises.html">Devises</a></li>
+                <li><a href="imc.html">IMC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <header class="page-header">
+            <h1>💰 Calculateur Salaire Net ↔ Brut</h1>
+            <p class="subtitle">Convertissez facilement votre salaire brut en net (ou l'inverse) en France</p>
+        </header>
+
+        <div class="calculator-container">
+            <div class="input-group">
+                <label for="status">Statut professionnel</label>
+                <select id="status">
+                    <option value="nonCadre">Non-cadre / Salarié</option>
+                    <option value="cadre">Cadre</option>
+                    <option value="fonctionnaire">Fonction publique</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="calculation-type">Type de calcul</label>
+                <select id="calculation-type">
+                    <option value="brutToNet">Brut → Net</option>
+                    <option value="netToBrut">Net → Brut</option>
+                </select>
+            </div>
+
+            <div class="input-group" id="brut-group">
+                <label for="salaire-brut">Salaire brut mensuel (€)</label>
+                <input type="number" id="salaire-brut" step="0.01" value="2500" min="0">
+            </div>
+
+            <div class="input-group" id="net-group" style="display: none;">
+                <label for="salaire-net">Salaire net mensuel (€)</label>
+                <input type="number" id="salaire-net" step="0.01" value="1950" min="0">
+            </div>
+
+            <div class="result-box">
+                <h3>Résultat</h3>
+                <div class="result-value" id="result-main">1 950 €</div>
+                <p id="result-label" style="opacity: 0.9; margin-top: 0.5rem;">Salaire net mensuel</p>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Détails annuels</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4>Salaire brut annuel</h4>
+                        <div class="value" id="brut-annuel">30 000 €</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Salaire net annuel</h4>
+                        <div class="value" id="net-annuel">23 400 €</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Charges sociales</h4>
+                        <div class="value" id="charges">6 600 €</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Taux de prélèvement</h4>
+                        <div class="value" id="taux">22.0 %</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <p><strong>💡 Note :</strong> Ces calculs sont des estimations basées sur les taux moyens de cotisations sociales en France. 
+                Le montant réel peut varier selon votre situation personnelle, votre entreprise et les conventions collectives applicables.</p>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h3>Exemples de salaires</h3>
+            <div class="examples-grid">
+                <div class="example-btn" onclick="setExample('nonCadre', 1800, 'brut')">
+                    <h4>SMIC (2026)</h4>
+                    <div class="value">1 800 € brut</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">≈ 1 404 € net</p>
+                </div>
+                <div class="example-btn" onclick="setExample('nonCadre', 2500, 'brut')">
+                    <h4>SALAIRE MOYEN</h4>
+                    <div class="value">2 500 € brut</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">≈ 1 950 € net</p>
+                </div>
+                <div class="example-btn" onclick="setExample('cadre', 3500, 'brut')">
+                    <h4>CADRE DÉBUTANT</h4>
+                    <div class="value">3 500 € brut</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">≈ 2 695 € net</p>
+                </div>
+                <div class="example-btn" onclick="setExample('cadre', 5000, 'brut')">
+                    <h4>CADRE CONFIRMÉ</h4>
+                    <div class="value">5 000 € brut</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">≈ 3 850 € net</p>
+                </div>
+                <div class="example-btn" onclick="setExample('cadre', 7500, 'brut')">
+                    <h4>CADRE SUPÉRIEUR</h4>
+                    <div class="value">7 500 € brut</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">≈ 5 775 € net</p>
+                </div>
+                <div class="example-btn" onclick="setExample('fonctionnaire', 3000, 'brut')">
+                    <h4>FONCTION PUBLIQUE</h4>
+                    <div class="value">3 000 € brut</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">≈ 2 460 € net</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Comprendre la différence entre brut et net</h2>
+            <p style="margin-bottom: 1rem;">
+                Le <strong>salaire brut</strong> est le montant avant déduction des cotisations sociales (sécurité sociale, 
+                retraite, chômage, etc.). C'est le montant négocié avec l'employeur.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                Le <strong>salaire net</strong> est ce que vous recevez réellement sur votre compte bancaire après déduction 
+                de toutes les cotisations sociales obligatoires.
+            </p>
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Taux de cotisations moyens</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="padding: 0.5rem 0;">✓ <strong>Non-cadre :</strong> environ 22% de charges</li>
+                <li style="padding: 0.5rem 0;">✓ <strong>Cadre :</strong> environ 23% de charges</li>
+                <li style="padding: 0.5rem 0;">✓ <strong>Fonction publique :</strong> environ 18% de charges</li>
+            </ul>
+            <div class="warning-box" style="margin-top: 1.5rem;">
+                <p><strong>⚠️ Attention :</strong> Ces taux sont des moyennes. Le taux réel dépend de nombreux facteurs : 
+                secteur d'activité, mutuelle d'entreprise, prévoyance, etc. Pour un calcul précis, référez-vous à votre fiche de paie.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MesCalculateurs - Tous droits réservés</p>
+            <p><a href="index.html" style="color: var(--primary-color);">← Découvrir plus d'outils</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Taux de cotisations sociales (moyennes 2026)
+        const TAUX = {
+            nonCadre: 0.22,   // 22% de charges
+            cadre: 0.23,      // 23% de charges
+            fonctionnaire: 0.18 // 18% de charges
+        };
+
+        const statusSelect = document.getElementById('status');
+        const calculationType = document.getElementById('calculation-type');
+        const salaireBrutInput = document.getElementById('salaire-brut');
+        const salaireNetInput = document.getElementById('salaire-net');
+        const brutGroup = document.getElementById('brut-group');
+        const netGroup = document.getElementById('net-group');
+
+        // Fonction pour formater les nombres avec espaces
+        function formatNumber(num) {
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(Math.round(num));
+        }
+
+        // Fonction pour calculer brut → net
+        function calculateBrutToNet() {
+            const brut = parseFloat(salaireBrutInput.value) || 0;
+            const taux = TAUX[statusSelect.value];
+            const net = brut * (1 - taux);
+            
+            updateResults(brut, net, taux);
+        }
+
+        // Fonction pour calculer net → brut
+        function calculateNetToBrut() {
+            const net = parseFloat(salaireNetInput.value) || 0;
+            const taux = TAUX[statusSelect.value];
+            const brut = net / (1 - taux);
+            
+            updateResults(brut, net, taux);
+        }
+
+        // Fonction pour mettre à jour les résultats
+        function updateResults(brut, net, taux) {
+            const type = calculationType.value;
+            
+            // Afficher le résultat principal
+            if (type === 'brutToNet') {
+                document.getElementById('result-main').textContent = formatNumber(net) + ' €';
+                document.getElementById('result-label').textContent = 'Salaire net mensuel';
+            } else {
+                document.getElementById('result-main').textContent = formatNumber(brut) + ' €';
+                document.getElementById('result-label').textContent = 'Salaire brut mensuel';
+            }
+
+            // Calculer les valeurs annuelles
+            const brutAnnuel = brut * 12;
+            const netAnnuel = net * 12;
+            const charges = brutAnnuel - netAnnuel;
+
+            document.getElementById('brut-annuel').textContent = formatNumber(brutAnnuel) + ' €';
+            document.getElementById('net-annuel').textContent = formatNumber(netAnnuel) + ' €';
+            document.getElementById('charges').textContent = formatNumber(charges) + ' €';
+            document.getElementById('taux').textContent = (taux * 100).toFixed(1) + ' %';
+        }
+
+        // Fonction pour changer le type de calcul
+        function toggleCalculationType() {
+            const type = calculationType.value;
+            
+            if (type === 'brutToNet') {
+                brutGroup.style.display = 'block';
+                netGroup.style.display = 'none';
+                calculateBrutToNet();
+            } else {
+                brutGroup.style.display = 'none';
+                netGroup.style.display = 'block';
+                calculateNetToBrut();
+            }
+        }
+
+        // Fonction pour charger un exemple
+        function setExample(status, amount, type) {
+            statusSelect.value = status;
+            
+            if (type === 'brut') {
+                calculationType.value = 'brutToNet';
+                salaireBrutInput.value = amount;
+                toggleCalculationType();
+            } else {
+                calculationType.value = 'netToBrut';
+                salaireNetInput.value = amount;
+                toggleCalculationType();
+            }
+        }
+
+        // Ajouter les écouteurs d'événements
+        statusSelect.addEventListener('change', () => {
+            if (calculationType.value === 'brutToNet') {
+                calculateBrutToNet();
+            } else {
+                calculateNetToBrut();
+            }
+        });
+
+        calculationType.addEventListener('change', toggleCalculationType);
+        salaireBrutInput.addEventListener('input', calculateBrutToNet);
+        salaireNetInput.addEventListener('input', calculateNetToBrut);
+
+        // Initialiser
+        calculateBrutToNet();
+    </script>
+</body>
+</html>

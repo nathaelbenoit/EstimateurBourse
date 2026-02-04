@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertisseur Vitesse ↔ Allure (course à pied)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MesCalculateurs</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="vitesse-allure.html">Vitesse/Allure</a></li>
+                <li><a href="salaire.html">Salaire</a></li>
+                <li><a href="dca.html">DCA</a></li>
+                <li><a href="interets-composes.html">Intérêts</a></li>
+                <li><a href="devises.html">Devises</a></li>
+                <li><a href="imc.html">IMC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        <header class="page-header">
+            <h1>🏃 Convertisseur Vitesse ↔ Allure</h1>
+            <p class="subtitle">Passez instantanément de la vitesse en km/h à l'allure min/km et min/mile</p>
+        </header>
+
+        <div class="calculator-container">
+            <div class="input-group">
+                <label for="speed">1. Vitesse en km/h</label>
+                <input type="number" id="speed" step="0.1" value="10" min="0">
+                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                    Exemple : 10 km/h ≈ 6:00 /km, 12 km/h ≈ 5:00 /km, 15 km/h ≈ 4:00 /km
+                </p>
+            </div>
+
+            <div class="input-group">
+                <label for="pace-km">2. Allure au kilomètre (min/km)</label>
+                <div class="input-row">
+                    <div>
+                        <input type="number" id="pace-min" placeholder="Minutes" min="0" max="59" value="6">
+                    </div>
+                    <div>
+                        <input type="number" id="pace-sec" placeholder="Secondes" min="0" max="59" value="0">
+                    </div>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                    💡 L'allure min/km est souvent utilisée sur les montres GPS et les plans d'entraînement.
+                </p>
+            </div>
+
+            <div class="input-group">
+                <label for="pace-mile">3. Allure au mile (min/mile)</label>
+                <div class="input-row">
+                    <div>
+                        <input type="number" id="pace-mile-min" placeholder="Minutes" min="0" max="59" value="9">
+                    </div>
+                    <div>
+                        <input type="number" id="pace-mile-sec" placeholder="Secondes" min="0" max="59" value="39">
+                    </div>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                    Utile pour les plans d'entraînement anglo-saxons ou les plateformes type Strava.
+                </p>
+            </div>
+
+            <div class="result-box">
+                <h3>Résumé de votre allure</h3>
+                <div class="results-grid" style="margin-top: 1.5rem;">
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Vitesse moyenne</h4>
+                        <div class="result-value" id="result-speed" style="font-size: 1.75rem;">10 km/h</div>
+                    </div>
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Allure au km</h4>
+                        <div class="result-value" id="result-pace-km" style="font-size: 1.75rem;">6:00 /km</div>
+                    </div>
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Allure au mile</h4>
+                        <div class="result-value" id="result-pace-mile" style="font-size: 1.75rem;">9:39 /mile</div>
+                    </div>
+                    <div>
+                        <h4 style="opacity: 0.9; font-size: 0.875rem;">Référence physique</h4>
+                        <div class="result-value" id="result-ms" style="font-size: 1.75rem;">2.78 m/s</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Temps estimé sur les principales distances</h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Basé sur une allure constante. Cela donne un ordre d'idée, sans tenir compte de la fatigue ni du relief.
+                </p>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4>5 km</h4>
+                        <div class="value" id="time-5k">30:00</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>10 km</h4>
+                        <div class="value" id="time-10k">1h 00:00</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Semi (21.1 km)</h4>
+                        <div class="value" id="time-semi">2h 06:35</div>
+                    </div>
+                    <div class="result-item">
+                        <h4>Marathon (42.2 km)</h4>
+                        <div class="value" id="time-marathon">4h 13:10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h3>Exemples d'allures à tester</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                Cliquez sur un exemple pour le charger automatiquement. Pratique pour visualiser les allures typiques.
+            </p>
+            <div class="examples-grid">
+                <div class="example-btn" onclick="setExample(10, 6, 0)">
+                    <h4>FOOTING TRANQUILLE</h4>
+                    <div class="value">6:00 /km</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">10 km/h</p>
+                </div>
+                <div class="example-btn" onclick="setExample(13.33, 4, 30)">
+                    <h4>ALLURE 10 KM</h4>
+                    <div class="value">4:30 /km</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">13.3 km/h</p>
+                </div>
+                <div class="example-btn" onclick="setExample(12, 5, 0)">
+                    <h4>SEMI-MARATHON</h4>
+                    <div class="value">5:00 /km</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">12 km/h</p>
+                </div>
+                <div class="example-btn" onclick="setExample(14.06, 4, 16)">
+                    <h4>MARATHON SUB 3H</h4>
+                    <div class="value">4:16 /km</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">14.1 km/h</p>
+                </div>
+                <div class="example-btn" onclick="setExample(10.59, 5, 40)">
+                    <h4>MARATHON 4H</h4>
+                    <div class="value">5:40 /km</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">10.6 km/h</p>
+                </div>
+                <div class="example-btn" onclick="setExample(15.65, 3, 50)">
+                    <h4>5 KM RAPIDE</h4>
+                    <div class="value">3:50 /km</div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">15.7 km/h</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Comprendre le lien entre vitesse et allure</h2>
+            <p style="margin-bottom: 1rem;">
+                La <strong>vitesse en km/h</strong> indique combien de kilomètres sont parcourus en une heure.
+                L'<strong>allure min/km</strong> indique combien de minutes (et de secondes) sont nécessaires pour parcourir un kilomètre.
+            </p>
+            <div class="info-box">
+                <p><strong>Formule :</strong> vitesse (km/h) = 60 / allure (min/km)</p>
+                <p style="margin-top: 0.5rem;"><strong>Inversement :</strong> allure (min/km) = 60 / vitesse (km/h)</p>
+            </div>
+            <p>
+                Plutôt que de manipuler des fractions de minutes et des divisions à la main, ce convertisseur 
+                effectue ces calculs pour vous, avec un affichage propre en minutes et secondes. Idéal pour 
+                construire un plan d'entraînement ou vérifier des allures cibles.
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MesCalculateurs - Tous droits réservés</p>
+            <p><a href="index.html" style="color: var(--primary-color);">← Découvrir plus d'outils</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Récupérer les éléments
+        const speedInput = document.getElementById('speed');
+        const paceMinInput = document.getElementById('pace-min');
+        const paceSecInput = document.getElementById('pace-sec');
+        const paceMileMinInput = document.getElementById('pace-mile-min');
+        const paceMileSecInput = document.getElementById('pace-mile-sec');
+
+        // Fonction pour formater le temps
+        function formatTime(minutes) {
+            const hrs = Math.floor(minutes / 60);
+            const mins = Math.floor(minutes % 60);
+            const secs = Math.round((minutes % 1) * 60);
+            
+            if (hrs > 0) {
+                return `${hrs}h ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            } else {
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // Fonction pour calculer depuis la vitesse
+        function updateFromSpeed() {
+            const speed = parseFloat(speedInput.value);
+            if (speed <= 0 || isNaN(speed)) return;
+
+            // Calculer l'allure en min/km
+            const paceMinTotal = 60 / speed;
+            const paceMin = Math.floor(paceMinTotal);
+            const paceSec = Math.round((paceMinTotal - paceMin) * 60);
+
+            paceMinInput.value = paceMin;
+            paceSecInput.value = paceSec;
+
+            // Calculer l'allure en min/mile (1 mile = 1.60934 km)
+            const paceMileTotal = paceMinTotal * 1.60934;
+            const paceMileMin = Math.floor(paceMileTotal);
+            const paceMileSec = Math.round((paceMileTotal - paceMileMin) * 60);
+
+            paceMileMinInput.value = paceMileMin;
+            paceMileSecInput.value = paceMileSec;
+
+            updateResults();
+        }
+
+        // Fonction pour calculer depuis l'allure km
+        function updateFromPaceKm() {
+            const paceMin = parseInt(paceMinInput.value) || 0;
+            const paceSec = parseInt(paceSecInput.value) || 0;
+            const paceTotal = paceMin + paceSec / 60;
+
+            if (paceTotal <= 0) return;
+
+            // Calculer la vitesse
+            const speed = 60 / paceTotal;
+            speedInput.value = speed.toFixed(2);
+
+            // Calculer l'allure mile
+            const paceMileTotal = paceTotal * 1.60934;
+            const paceMileMin = Math.floor(paceMileTotal);
+            const paceMileSec = Math.round((paceMileTotal - paceMileMin) * 60);
+
+            paceMileMinInput.value = paceMileMin;
+            paceMileSecInput.value = paceMileSec;
+
+            updateResults();
+        }
+
+        // Fonction pour calculer depuis l'allure mile
+        function updateFromPaceMile() {
+            const paceMileMin = parseInt(paceMileMinInput.value) || 0;
+            const paceMileSec = parseInt(paceMileSecInput.value) || 0;
+            const paceMileTotal = paceMileMin + paceMileSec / 60;
+
+            if (paceMileTotal <= 0) return;
+
+            // Calculer l'allure km
+            const paceKmTotal = paceMileTotal / 1.60934;
+            const paceMin = Math.floor(paceKmTotal);
+            const paceSec = Math.round((paceKmTotal - paceMin) * 60);
+
+            paceMinInput.value = paceMin;
+            paceSecInput.value = paceSec;
+
+            // Calculer la vitesse
+            const speed = 60 / paceKmTotal;
+            speedInput.value = speed.toFixed(2);
+
+            updateResults();
+        }
+
+        // Fonction pour mettre à jour les résultats
+        function updateResults() {
+            const speed = parseFloat(speedInput.value);
+            const paceMin = parseInt(paceMinInput.value) || 0;
+            const paceSec = parseInt(paceSecInput.value) || 0;
+            const paceMileMin = parseInt(paceMileMinInput.value) || 0;
+            const paceMileSec = parseInt(paceMileSecInput.value) || 0;
+
+            // Mettre à jour les résultats affichés
+            document.getElementById('result-speed').textContent = speed.toFixed(2) + ' km/h';
+            document.getElementById('result-pace-km').textContent = `${paceMin}:${paceSec.toString().padStart(2, '0')} /km`;
+            document.getElementById('result-pace-mile').textContent = `${paceMileMin}:${paceMileSec.toString().padStart(2, '0')} /mile`;
+            document.getElementById('result-ms').textContent = (speed / 3.6).toFixed(2) + ' m/s';
+
+            // Calculer les temps estimés
+            const paceTotal = paceMin + paceSec / 60;
+            document.getElementById('time-5k').textContent = formatTime(5 * paceTotal);
+            document.getElementById('time-10k').textContent = formatTime(10 * paceTotal);
+            document.getElementById('time-semi').textContent = formatTime(21.1 * paceTotal);
+            document.getElementById('time-marathon').textContent = formatTime(42.2 * paceTotal);
+        }
+
+        // Fonction pour charger un exemple
+        function setExample(speed, paceMin, paceSec) {
+            speedInput.value = speed.toFixed(2);
+            paceMinInput.value = paceMin;
+            paceSecInput.value = paceSec;
+            updateFromPaceKm();
+        }
+
+        // Ajouter les écouteurs d'événements
+        speedInput.addEventListener('input', updateFromSpeed);
+        paceMinInput.addEventListener('input', updateFromPaceKm);
+        paceSecInput.addEventListener('input', updateFromPaceKm);
+        paceMileMinInput.addEventListener('input', updateFromPaceMile);
+        paceMileSecInput.addEventListener('input', updateFromPaceMile);
+
+        // Initialiser
+        updateFromSpeed();
+    </script>
+</body>
+</html>
